@@ -16,7 +16,7 @@ to setup
   create-turtles niceAnts [
     set color white
     setxy random-xcor random-ycor
-    set size 5  ;; easier to see
+    set size 2  ;; easier to see
   ]
   
   create-turtles badAnts [
@@ -61,21 +61,32 @@ end
 ;; and clean from piles of other colors,
 ;; different colors do not mix well. 
 to look-around 
-if color = green [
-  ask patches in-radius 1 [
-   if pcolor = yellow [
-     
-   ]
-]
-]
-if color = yellow and pcolor = green[
-
-]
-
+  if color = green [
+    ask patches in-radius 3 [
+     if pcolor = yellow [
+       ask myself [         
+         get-away
+         look-around
+         ]
+     ]
+    ]
+  ]
+  if color = yellow [
+    ask patches in-radius 3 [
+     if pcolor = green [
+       ask myself [
+         get-away
+         look-around
+       ]
+     ]
+    ]
+  ]
+ 
 end
 
 to put-down-chip  ;; turtle procedure -- finds empty spot & drops chip
   ifelse pcolor = black [
+    look-around  
     if color = green [
       set color white
       set pcolor green
@@ -172,9 +183,9 @@ ticks
 
 CC-WINDOW
 5
-546
-744
-641
+457
+621
+552
 Command Center
 0
 
@@ -219,7 +230,7 @@ niceAnts
 niceAnts
 1
 2000
-78
+2000
 1
 1
 NIL
@@ -234,7 +245,7 @@ density
 density
 0.0
 100.0
-3
+6
 1.0
 1
 %
