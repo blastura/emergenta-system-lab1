@@ -1,0 +1,130 @@
+\documentclass[titlepage, a4paper, 12pt]{article}
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{parskip}
+
+% SourceCode
+\usepackage{listings}
+\usepackage{color}
+
+% Include pdf with multiple pages ex \includepdf[pages=-, nup=2x2]{filename.pdf}
+\usepackage[final]{pdfpages}
+% Place figures where they should be
+\usepackage{float}
+
+% SourceCode
+\definecolor{keywordcolor}{rgb}{0.5,0,0.75}
+\lstset{
+  inputencoding=utf8,
+  language=Java,
+  extendedchars=true,
+  basicstyle=\scriptsize\ttfamily,
+  stringstyle=\color{blue},
+  commentstyle=\color{red},
+  numbers=left,
+  firstnumber=auto,
+  numberblanklines=true,
+  stepnumber=1,
+  showstringspaces=false,
+  keywordstyle=\color{keywordcolor}
+  % identifierstyle=\color{identifiercolor}
+}
+
+% Float for text
+\floatstyle{ruled}
+\newfloat{kod}{H}{lop}
+\floatname{kod}{Kodsnutt}
+
+% vars
+\def\title{AntiTD}
+\def\preTitle{Laboration 4}
+\def\kurs{Applikationsprogrammering i Java, HT-08}
+
+\def\namn{Andreas Jakobsson}
+\def\mail{dit06ajs@cs.umu.se}
+\def\namnTva{Anton Johansson}
+\def\mailTva{dit06ajn@cs.umu.se}
+
+\def\pathtocode{$\sim$dit06ajn/edu/apjava/lab4}
+
+\def\handledareEtt{Johan Eliasson, johane@cs.umu.se}
+\def\handledareTva{Tor Sterner-Johansson, tors@cs.umu.se}
+
+\def\inst{datavetenskap}
+\def\dokumentTyp{Laborationsrapport}
+
+\begin{document}
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{small}
+    \begin{tabular}{@{}p{\textwidth}@{}}
+      UMEÅ UNIVERSITET \hfill \today \\
+      Institutionen för \inst \\
+      \dokumentTyp \\
+    \end{tabular}
+  \end{small}
+  \vspace{10mm}
+  \begin{center}
+    \LARGE{\preTitle} \\
+    \huge{\textbf{\kurs}} \\
+    \vspace{10mm}
+    \LARGE{\title} \\
+    \vspace{15mm}
+    \begin{large}
+      \namn, \mail \\
+      \namnTva, \mailTva\\
+      \texttt{\pathtocode}
+    \end{large}
+    \vfill
+    \large{\textbf{Handledare}}\\
+    \mbox{\large{\handledareEtt}}
+    \mbox{\large{\handledareTva}}
+  \end{center}
+\end{titlepage}
+
+\newpage
+\mbox{}
+\vspace{70mm}
+\begin{center}
+% Dedication goes here
+\end{center}
+\thispagestyle{empty}
+\newpage
+
+\pagestyle{fancy}
+\rhead{\today}
+\lhead{\footnotesize{\namn, \mail\\\namnTva, \mailTva}}
+\chead{}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+\cleardoublepage
+\newpage
+\tableofcontents
+\cleardoublepage
+
+\fancyfoot[LE,RO]{\thepage}
+\pagenumbering{arabic}
+
+\section{Problemspecifikation}\label{sec:problemspecifikation}
+
+\bibliographystyle{alpha}
+\bibliography{books.bib}
+
+\newpage
+\appendix
+\pagenumbering{roman}
+\section{Bilagor}\label{sec:kallkod}
+% Källkoden ska finnas tillgänglig i er hemkatalog
+% ~/edu/apjava/lab1/. Bifoga även utskriven källkod.
+Härefter följer utskrifter från källkoden och andra filer som hör till
+denna laboration
+
+\subsection{Källkod}
+\subsection{Redovisning av inblandning}
+
+\end{document}
