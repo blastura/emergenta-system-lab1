@@ -1,0 +1,116 @@
+* Laboration 1: Termiter i NetLogo, Emergenta system, VT-09
+
+** Introduktion
+
+NetLogo är ett verktyg som är väl lämpat för modellering och
+simulering av komplexa system som utvecklas över tiden. I NetLogo kan
+man instruera tusentals oberoende agenter som sedan utför sina
+instruktioner oberoende av varandra. Genom att på detta sätt ge
+instruktioner på indviduell nivå kan man sedan studera de globala
+egenskaper som emergerar fram i interaktionen mellan agenterna och
+deras omgivning. NetLogo kan användas till att på ett enkelt sätt
+studera en mångfald av naturliga och sociala fenomen, som exempel kan
+man studera de modeller som följer med verktyget.
+
+Den modell som ska studeras i denna laboration är ett bra exempel på
+hur en global egenskap kan emergera fram i interaktionen mellan
+termiter och deras omgivning utan att det i deras individuella
+instruktioner på något sätt framgår vilken global egenskap som kan
+uppstå. Varje termit följer följande enkla regler:
+
+    * Vandra slumpmässigt omkring (utan bärande på träbit)
+    * Vid kontakt med en träbit, plocka upp den
+    * Vandra slumpmässigt omkring (bärande på träbit)
+    * Vid kontakt med en träbit, lägg ned den egna träbiten brevid den
+      nya
+    * Hoppa till första punkten igen
+
+Tillsammans kommer termiterna att över tiden att ha lagt alla träbitar
+i en hög. Naturligtvis kan detta störas på olika sätt vilket kan
+resultera i att ingen hög bildas. Detta kommer ni bland annat att
+studera i denna laboration.
+
+Laborationen ska lösas i grupper om två personer.
+
+** Syfte
+
+Det övergripande syftet är att öka förståelsen för emergenta
+system. Laborationen har följande delsyften:
+
+    * Introducera NetLogo
+    * Stimulera till tankar kring emergenta egenskaper i system
+
+** Uppgift
+*** Allmänt
+
+I den här laborationen ska ni studera modellen
+termites.nlogo. Modellen hittar ni i modellbiblioteket som finns under
+file-fliken i NetLogo. NetLogo finns installerat i samtliga
+windows-maskiner i datorlabben. Det går även bra att ladda ned NetLogo
+från dess hemsida, http://ccl.northwestern.edu/netlogo/. NetLogo är
+implementerat i Java vilket gör att det går att köra på alla
+plattformar.
+
+Börja med att bekanta er med NetLogo och den befintliga
+termitmodellen, på dess hemsida finns bland annat en användarmanual i
+både html- och pdf-format. I laborationen ska följande uppgifter
+lösas:
+
+*** Sortering av flera sorters träbitar
+
+Den ursprungliga termitmodellen innehåller endast en sorts termiter
+och en sorts träbitar. Utöka modellen till minst två sorters termiter
+och två sorters träbitar. Behövs det ytterligare regler i termiterna
+för att systemet ska konvergera till en separat hög för varje sorts
+träbitar? Behövs det ytterligare regler för att minska
+konvergeringstiden? Med konvergering menas här att det endast finns en
+hög av varje sorts träbitar när systemet konvergerat.
+*** Feltolerans
+
+I ett system är feltolerans en viktig egenskap, ett naturligt eller
+artificiellt system måste tåla i en viss utsträckning att saker går
+fel och att andra agenter i dess omgivning vill förstöra. Studera hur
+termitmodellen reagerar om det införs termiter som på något sätt
+förstör (exempelvis genom att plocka upp träbitar och lägga ned dem
+där inga andra träbitar finns). Frågor att fundera kring är: Hur stor
+andel förstörande termiter behövs det minst för att förstöra
+uppbyggnaden av en hög? Hur påverkas konvergeringshastigheten? Studera
+detta med endast en sorts termiter/träbitar och med flera sorters
+termiter/träbitar.
+
+I er inlämnade lösning ska det enkelt gå att ändra antalet av
+respektive sort termiter och andelen av respektive sort träbitar.
+** Redovisning
+
+Laborationen ska dels redovisas med en rapport och dels genom
+deltagande i redovisningen av laborationen (se schemat för
+tidpunkt). Rapportens huvudsyfte är att ni ska redovisa era
+reflektioner kring det som laborationen behandlar, dvs
+reflektionsdelen är viktig. Diskutera de frågor som nämns ovan och
+försöka att sätta in laborationen i ett större sammanhang. Kan du se
+några applikationsområden för den här typen av algoritmer? Kan
+modellen utökas för att göras mer intressant?
+
+Under redovisningen av laborationen kommer vi att eventuellt titta på
+någon lösning och därefter diskutera kring olika frågeställningar.
+*** Innehåll i rapport
+
+I er rapport ska följande punkter tas med:
+
+    * Ett fullständigt försättsblad
+    * Sökvägen till er NetLogo-kod (kan skrivas på försättsbladet)
+    * Reflektion kring er lösning och eventuella begränsningar
+    * Reflektion kring de frågor som ställs ovan samt saker som du
+      själv finner relevant.
+    * Utskriven dokumenterad källkod
+
+*** Datum
+
+Rapporten ska vara inlämnad senast måndag 26 januari 9.00.
+
+Lycka till!
+
+* Copyright
+[Hem][Tillbaka] http://www.cs.umu.se/kurser/5DV017/VT09/lab/lab1.html
+Ansvarig för sidan: Jonny Pettersson Senast ändrad Monday, 19-Jan-2009
+09:16:14 MET Copyright © 2009. All rights reserved.
