@@ -1,3 +1,5 @@
+turtles-own [chip-color]
+
 to setup
   clear-all
   set-default-shape turtles "bug"
@@ -14,15 +16,17 @@ to setup
         
   ;; randomly distribute termites
   create-turtles niceAnts [
+    set chip-color yellow
     set color white
     setxy random-xcor random-ycor
-    set size 2  ;; easier to see
+    set size 3  ;; easier to see
   ]
   
   create-turtles badAnts [
-    set color red
+    set chip-color green
+    set color white
     setxy random-xcor random-ycor
-    set size 2  ;; easier to see
+    set size 3  ;; easier to see
   ]
 end
 
@@ -32,72 +36,48 @@ to go  ;; turtle procedure
   put-down-chip
 end
 
-to search-for-chip  ;; turtle procedure -- "picks up chip" by turning orange
-  ifelse (pcolor = yellow or pcolor = green) [   
-    set color ifelse-value (pcolor = yellow) [yellow][green]
+;; Turtle procedure to search and pick up a chip
+to search-for-chip
+  if chip-color = pcolor [
     set pcolor black
-    get-away 
+    set color red
+    stop
   ]
-  ;; else
-  [ wiggle
-    search-for-chip ]
+  wiggle
+  search-for-chip
 end
 
-to find-new-pile  ;; turtle procedure -- look for yellow patches
-  ifelse pcolor != black [
-    let found-spot? true
-    if color = green [
-      ask patches in-radius 3 [
-        if (pcolor = yellow)  [
-          set found-spot? false
-        ]  
-      ]
-    ]
-    if color = yellow [
-      ask patches in-radius 3 [
-        if (pcolor = green)  [
-          set found-spot? false
-        ]
-      ]
-    ]
-    if not found-spot? [
-      get-away
-      find-new-pile
-    ]
+;; Turtle procedure to find a pile with pcolor == chip-color
+to find-new-pile
+  if pcolor = chip-color [
+    ;; do nothing
+    stop
   ]
-  ;; else
-  [
-    wiggle
-    find-new-pile
-  ]
+  wiggle
+  find-new-pile
 end
 
 to put-down-chip  ;; turtle procedure -- finds empty spot & drops chip
-  ifelse pcolor = black [
-    if color = green [
-      set color white
-      set pcolor green
-    ]
-    if color = yellow [
-       set color white
-       set pcolor yellow
-    ]
-    get-away ]
-  ;; else
-  [ rt random 360
-    fd 1
-    put-down-chip ]
+  if pcolor = black [
+    set pcolor chip-color
+    get-away 
+    stop
+  ]
+  rt random 360
+  fd 1
+  put-down-chip
 end
 
 to get-away  ;; turtle procedure -- escape from yellow piles
   rt random 360
-  fd 20
-  if pcolor != black
-    [ get-away ]
+  fd 40
+  if pcolor != black [
+    get-away 
+  ]
 end
 
 to wiggle ; turtle procedure
-  fd 1
+  fd 4
   rt random 50
   lt random 50
 end
@@ -145,11 +125,11 @@ end
 GRAPHICS-WINDOW
 200
 10
-612
-443
+813
+644
 100
 100
-2.0
+3.0
 1
 10
 1
@@ -170,9 +150,9 @@ ticks
 
 CC-WINDOW
 5
-457
-621
-552
+658
+822
+753
 Command Center
 0
 
@@ -209,15 +189,15 @@ NIL
 NIL
 
 SLIDER
-7
+8
 53
-178
+179
 86
 niceAnts
 niceAnts
 1
 2000
-1999
+200
 1
 1
 NIL
@@ -232,7 +212,7 @@ density
 density
 0.0
 100.0
-6
+18
 1.0
 1
 %
@@ -247,7 +227,7 @@ badAnts
 badAnts
 0
 2000
-0
+200
 1
 1
 NIL
