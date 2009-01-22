@@ -13,6 +13,7 @@ to setup
            ]
       ]
   ]
+  
         
   ;; randomly distribute termites
   create-turtles yellowAnts [
@@ -38,6 +39,15 @@ to setup
     set size 20  ;; easier to see
   ]
 end
+
+to-report yellow-green-ratio
+  report yellowAnts / greenAnts
+end
+
+to-report good-bad-ratio
+  report badAnts / (yellowAnts + greenAnts)
+end
+
 
 to go
  ;; turtle procedure
@@ -226,7 +236,7 @@ greenAnts
 greenAnts
 1
 2000
-232
+100
 1
 1
 NIL
@@ -256,7 +266,7 @@ yellowAnts
 yellowAnts
 0
 2000
-200
+100
 1
 1
 NIL
@@ -271,20 +281,42 @@ badAnts
 badAnts
 0
 100
-27
+20
 1
 1
 NIL
 HORIZONTAL
 
 MONITOR
-62
-228
-119
-273
+14
+488
+71
+533
 Timer
 timer
 0
+1
+11
+
+MONITOR
+14
+596
+149
+641
+yellow-green-ratio
+yellow-green-ratio
+2
+1
+11
+
+MONITOR
+14
+543
+110
+588
+good-bad-ratio
+good-bad-ratio
+2
 1
 11
 
@@ -630,7 +662,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 4.0.4
+NetLogo 4.0.3
 @#$#@#$#@
 setup
 ask turtles [ repeat 150 [ go ] ]
