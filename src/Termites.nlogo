@@ -22,7 +22,7 @@ to setup
   create-turtles badAnts [
     set color red
     setxy random-xcor random-ycor
-    set size 10  ;; easier to see
+    set size 2  ;; easier to see
   ]
 end
 
@@ -33,60 +33,47 @@ to go  ;; turtle procedure
 end
 
 to search-for-chip  ;; turtle procedure -- "picks up chip" by turning orange
-  ifelse pcolor = yellow [   
+  ifelse (pcolor = yellow or pcolor = green) [   
+    set color ifelse-value (pcolor = yellow) [yellow][green]
     set pcolor black
-    set color yellow
-    get-away ]
-  ;; else
-  [ ifelse pcolor = green [
-    set pcolor black
-    set color green
-    get-away ]
+    get-away 
+  ]
   ;; else
   [ wiggle
-    search-for-chip ]]
+    search-for-chip ]
 end
 
 to find-new-pile  ;; turtle procedure -- look for yellow patches
-  ifelse (pcolor = yellow and color = yellow)
-          or (pcolor = green and color = green) [
-     ;; nothin?
+  ifelse pcolor != black [
+    let found-spot? true
+    if color = green [
+      ask patches in-radius 3 [
+        if (pcolor = yellow)  [
+          set found-spot? false
+        ]  
+      ]
+    ]
+    if color = yellow [
+      ask patches in-radius 3 [
+        if (pcolor = green)  [
+          set found-spot? false
+        ]
+      ]
+    ]
+    if not found-spot? [
+      get-away
+      find-new-pile
+    ]
   ]
   ;; else
-  [ wiggle
-    find-new-pile ]
-end
-
-;; Apartheid check to see if spot is nice
-;; and clean from piles of other colors,
-;; different colors do not mix well. 
-to look-around 
-  if color = green [
-    ask patches in-radius 3 [
-     if pcolor = yellow [
-       ask myself [         
-         get-away
-         look-around
-         ]
-     ]
-    ]
+  [
+    wiggle
+    find-new-pile
   ]
-  if color = yellow [
-    ask patches in-radius 3 [
-     if pcolor = green [
-       ask myself [
-         get-away
-         look-around
-       ]
-     ]
-    ]
-  ]
- 
 end
 
 to put-down-chip  ;; turtle procedure -- finds empty spot & drops chip
   ifelse pcolor = black [
-    look-around  
     if color = green [
       set color white
       set pcolor green
@@ -230,7 +217,7 @@ niceAnts
 niceAnts
 1
 2000
-2000
+1999
 1
 1
 NIL
@@ -258,9 +245,9 @@ SLIDER
 43
 badAnts
 badAnts
-1
+0
 2000
-1
+0
 1
 1
 NIL
@@ -607,7 +594,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 4.0.3
+NetLogo 4.0.4
 @#$#@#$#@
 setup
 ask turtles [ repeat 150 [ go ] ]
