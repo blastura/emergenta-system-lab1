@@ -107,7 +107,8 @@
 \tableofcontents
 \cleardoublepage
 
-\fancyfoot[LE,RO]{\thepage}
+% \fancyfoot[LE,RO]{\thepage}
+\cfoot{\thepage}
 \pagenumbering{arabic}
 
 \section{Problemspecifikation}\label{sec:problemspecifikation}
@@ -175,6 +176,168 @@ procedur.
 
 %  I er inlämnade lösning ska det enkelt gå att ändra antalet av
 %  respektive sort termiter och andelen av respektive sort träbitar.
+
+\subsection{images}
+
+\begin{figure}
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{30 sekunder, inga badAnts}
+    \includegraphics[width=6cm]{images/no-bad-30.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{30 sekunder, 0,02 \% badAnts}
+    \includegraphics[width=6cm]{images/10-bad-30.png}
+  \end{minipage}
+
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{60 sekunder, inga badAnts}
+    \includegraphics[width=6cm]{images/no-bad-60.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{60 sekunder, 0,02 \% badAnts}
+    \includegraphics[width=6cm]{images/10-bad-60.png}
+  \end{minipage}
+  
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{90 sekunder, inga badAnts}
+    \includegraphics[width=6cm]{images/no-bad-90.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{90 sekunder, 0,02 \% badAnts}
+    \includegraphics[width=6cm]{images/10-bad-90.png}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{30 sekunder, 4 \% badAnts}
+    \includegraphics[width=6cm]{images/20-bad-30.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{30 sekunder, 6 \% badAnts}
+    \includegraphics[width=6cm]{images/30-bad-30.png}
+  \end{minipage}
+
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{60 sekunder, 4 \% badAnts}
+    \includegraphics[width=6cm]{images/20-bad-60.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{60 sekunder, 6 \% badAnts}
+    \includegraphics[width=6cm]{images/30-bad-60.png}
+  \end{minipage}
+  
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{90 sekunder, 4 \% badAnts}
+    \includegraphics[width=6cm]{images/20-bad-90.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{90 sekunder, 6 \% badAnts}
+    \includegraphics[width=6cm]{images/30-bad-90.png}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{30 sekunder, 8 \% badAnts}
+    \includegraphics[width=6cm]{images/40-bad-30.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{30 sekunder, 10 \% badAnts}
+    \includegraphics[width=6cm]{images/50-bad-30.png}
+  \end{minipage}
+
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{60 sekunder, 8 \% badAnts}
+    \includegraphics[width=6cm]{images/40-bad-60.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{60 sekunder, 10 \% badAnts}
+    \includegraphics[width=6cm]{images/50-bad-60.png}
+  \end{minipage}
+  
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{90 sekunder, 8 \% badAnts}
+    \includegraphics[width=6cm]{images/40-bad-90.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{90 sekunder, 10 \% badAnts}
+    \includegraphics[width=6cm]{images/50-bad-90.png}
+  \end{minipage}
+\end{figure}
+
+% TODO: comment this figure in text
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=110mm]{images/50-bad-120.png}
+    \caption{120 sekunder, 10 \% badAnts}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{30 sekunder, 12 \% badAnts}
+    \includegraphics[width=6cm]{images/60-bad-60.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{60 sekunder, 12 \% badAnts}
+    \includegraphics[width=6cm]{images/60-bad-60.png}
+  \end{minipage}
+
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{90 sekunder, 12 \% badAnts}
+    \includegraphics[width=6cm]{images/60-bad-90.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{120 sekunder, 12 \% badAnts}
+    \includegraphics[width=6cm]{images/60-bad-120.png}
+  \end{minipage}
+  
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{150 sekunder, 12 \% badAnts}
+    \includegraphics[width=6cm]{images/60-bad-150.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{180 sekunder, 12 \% badAnts}
+    \includegraphics[width=6cm]{images/60-bad-180.png}
+  \end{minipage}
+\end{figure}
 
 \bibliographystyle{alpha}
 \bibliography{books.bib}
