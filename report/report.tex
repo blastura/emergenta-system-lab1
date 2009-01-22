@@ -39,19 +39,19 @@
 \floatname{kod}{Kodsnutt}
 
 % vars
-\def\title{AntiTD}
-\def\preTitle{Laboration 4}
-\def\kurs{Applikationsprogrammering i Java, HT-08}
+\def\title{Termiter i NetLogo}
+\def\preTitle{Laboration 1}
+\def\kurs{Emergenta system, VT-09}
 
 \def\namn{Andreas Jakobsson}
 \def\mail{dit06ajs@cs.umu.se}
 \def\namnTva{Anton Johansson}
 \def\mailTva{dit06ajn@cs.umu.se}
 
-\def\pathtocode{$\sim$dit06ajn/edu/apjava/lab4}
+\def\pathtocode{$\sim$dit06ajn/edu/emergenta-system/lab1/src}
 
-\def\handledareEtt{Johan Eliasson, johane@cs.umu.se}
-\def\handledareTva{Tor Sterner-Johansson, tors@cs.umu.se}
+\def\handledareEtt{Jonny Pettersson, jonny@cs.umu.se}
+\def\handledareTva{Anders Broberg, bopspe@cs.umu.se}
 
 \def\inst{datavetenskap}
 \def\dokumentTyp{Laborationsrapport}
@@ -111,6 +111,31 @@
 \pagenumbering{arabic}
 
 \section{Problemspecifikation}\label{sec:problemspecifikation}
+Laborationen gick ut på att göra ändringar i en befintlig
+NetLogo\footnote{http://ccl.northwestern.edu/netlogo/} modell som
+imiterar myrors beteende att bygga myrstackar. Ändringarna som skulle
+göras och studeras var:
+
+\begin{itemize}
+\item Sortering av flera sorters träbitar för att bygga olika
+  myrstackar.
+\item Laborera med feltolerans, vad händer med modellen om det införs
+  myror som på något sätt stör de andra myrornas beteende?
+\end{itemize}
+% Behövs det ytterligare regler i termiterna för att systemet ska
+% konvergera till en separat hög för varje sorts träbitar?
+
+Laborationsspecifikation finns i original på sidan:\\
+\verb!http://www.cs.umu.se/kurser/5DV017/VT09/lab/lab1.html!
+
+\section{Analys}
+Nedan avsnitt beskriver analysen som gjorts med avseende på frågorna
+från problemspecifikationen.
+
+\subsection{Sortering av olika träbitar}
+
+\subsection{Feltolerans}
+
 
 \bibliographystyle{alpha}
 \bibliography{books.bib}
@@ -125,6 +150,8 @@ Härefter följer utskrifter från källkoden och andra filer som hör till
 denna laboration
 
 \subsection{Källkod}
-\subsection{Redovisning av inblandning}
-
+\subsection{Termites.nlogo}\label{Termites.nlogo}
+\begin{footnotesize}
+  \verbatiminput{../src/Termites.nlogo}
+\end{footnotesize}
 \end{document}
