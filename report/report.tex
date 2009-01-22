@@ -141,6 +141,25 @@ från problemspecifikationen.
 % konvergeringstiden? Med konvergering menas här att det endast finns en
 % hög av varje sorts träbitar när systemet konvergerat.
 
+För att sortera olika sorters träbitar görs skapas olika myrsorter som
+var för sig enbart är intresserade av att plocka upp och lägga ner
+träbitar av en specifik sort. För att en myrsort ska lägga ner sin
+träbit krävs att den först hittat en träbit av samma sort. Det är
+alltså inga ny regler som införts bara nya myrsorter och
+träbitar. Myrsorterna är helt oberoende av varandra.
+
+Vid försök med en myrsort som plockar upp alla möjliga träsorter men
+enbart lägger ner dem när de hittat en träsort av samma typ som myran
+själv bär på blev det problem med att högar bildades av blandade
+träsorter. Detta eftersom myrorna inte var benägna att gå in mot
+mitten av en hög för att plocka träbitar, så fort en träbit hittades
+plockade den och lades så fort en liknande träbit hittades, vilket
+alltså gjorde att myrorna alltid höll sig i utkanten av högarna. Ingen
+filtrering av redan skapade högar utfördes.
+
+För att minska tiden det tog för myrorna att av varje träsort enbart
+bilda en samlad hög ökades stegen som myrorna tog mellan varje
+procedur.
 
 \subsection{Feltolerans}
 % I ett system är feltolerans en viktig egenskap, ett naturligt eller

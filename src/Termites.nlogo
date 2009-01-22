@@ -1,8 +1,8 @@
-turtles-own [chip-color]
+turtles-own [chip-color is-bad?]
 
 to setup
   clear-all
-  set-default-shape turtles "bug"
+  set-default-shape turtles "chipBug"
   ;; randomly distribute wood chips
   ask patches [
      if random-float 100 < density [
@@ -15,32 +15,60 @@ to setup
   ]
         
   ;; randomly distribute termites
-  create-turtles niceAnts [
+  create-turtles yellowAnts [
+    set is-bad? false
     set chip-color yellow
-    set color white
+    set color black
     setxy random-xcor random-ycor
-    set size 3  ;; easier to see
+    set size 5  ;; easier to see
   ]
   
-  create-turtles badAnts [
+  create-turtles greenAnts [
+    set is-bad? false
     set chip-color green
-    set color white
+    set color black
     setxy random-xcor random-ycor
-    set size 3  ;; easier to see
+    set size 5  ;; easier to see
+  ]
+
+  create-turtles badAnts [
+    set is-bad? true
+    set color red
+    setxy random-xcor random-ycor
+    set size 20  ;; easier to see
   ]
 end
 
-to go  ;; turtle procedure
-  search-for-chip
-  find-new-pile
-  put-down-chip
+to go
+ ;; turtle procedure
+ ifelse not is-bad? [
+   search-for-chip
+   find-new-pile
+   put-down-chip
+ ][
+   ;; if is-bad?
+   search-for-any-chip
+   get-away
+   put-down-chip
+ ]
+end
+
+to search-for-any-chip
+  if pcolor != black [
+    set chip-color pcolor
+    set color chip-color
+    set pcolor black
+    stop
+  ]
+  wiggle
+  search-for-any-chip
 end
 
 ;; Turtle procedure to search and pick up a chip
 to search-for-chip
   if chip-color = pcolor [
     set pcolor black
-    set color red
+    set color chip-color
     stop
   ]
   wiggle
@@ -60,6 +88,7 @@ end
 to put-down-chip  ;; turtle procedure -- finds empty spot & drops chip
   if pcolor = black [
     set pcolor chip-color
+    set color black
     get-away 
     stop
   ]
@@ -70,14 +99,14 @@ end
 
 to get-away  ;; turtle procedure -- escape from yellow piles
   rt random 360
-  fd 40
+  fd 100
   if pcolor != black [
     get-away 
   ]
 end
 
 to wiggle ; turtle procedure
-  fd 4
+  fd 20
   rt random 50
   lt random 50
 end
@@ -145,7 +174,7 @@ GRAPHICS-WINDOW
 100
 0
 0
-0
+1
 ticks
 
 CC-WINDOW
@@ -157,10 +186,10 @@ Command Center
 0
 
 BUTTON
-81
-141
-142
-174
+104
+184
+165
+217
 go
 go
 T
@@ -173,12 +202,12 @@ NIL
 NIL
 
 BUTTON
-11
-141
-72
-174
+29
+184
+90
+217
 setup
-setup
+setup\nreset-timer
 NIL
 1
 T
@@ -189,30 +218,30 @@ NIL
 NIL
 
 SLIDER
-8
-53
-179
-86
-niceAnts
-niceAnts
+7
+48
+178
+81
+greenAnts
+greenAnts
 1
 2000
-200
+232
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-6
-99
-180
-132
+5
+144
+179
+177
 density
 density
 0.0
 100.0
-18
+19
 1.0
 1
 %
@@ -223,8 +252,8 @@ SLIDER
 10
 179
 43
-badAnts
-badAnts
+yellowAnts
+yellowAnts
 0
 2000
 200
@@ -232,6 +261,32 @@ badAnts
 1
 NIL
 HORIZONTAL
+
+SLIDER
+7
+86
+179
+119
+badAnts
+badAnts
+0
+100
+27
+1
+1
+NIL
+HORIZONTAL
+
+MONITOR
+62
+228
+119
+273
+Timer
+timer
+0
+1
+11
 
 @#$#@#$#@
 WHAT IS IT?
@@ -316,15 +371,6 @@ Line -16777216 false 150 285 150 135
 Line -16777216 false 150 135 15 75
 Line -16777216 false 150 135 285 75
 
-bug
-true
-0
-Circle -7500403 true true 96 182 108
-Circle -7500403 true true 110 127 80
-Circle -7500403 true true 110 75 80
-Line -7500403 true 150 100 80 30
-Line -7500403 true 150 100 220 30
-
 butterfly
 true
 0
@@ -346,6 +392,16 @@ Circle -16777216 true false 30 180 90
 Polygon -16777216 true false 162 80 132 78 134 135 209 135 194 105 189 96 180 89
 Circle -7500403 true true 47 195 58
 Circle -7500403 true true 195 195 58
+
+chipbug
+true
+0
+Rectangle -7500403 true true 75 45 225 75
+Circle -1 true false 96 182 108
+Circle -1 true false 110 127 80
+Circle -1 true false 110 75 80
+Line -1 false 150 100 80 30
+Line -1 false 150 100 220 30
 
 circle
 false
