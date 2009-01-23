@@ -1,7 +1,9 @@
+globals [total-time filename]
 turtles-own [chip-color is-bad?]
 
 to setup
   clear-all
+  set total-time 0
   set-default-shape turtles "chipBug"
   ;; randomly distribute wood chips
   ask patches [
@@ -48,6 +50,20 @@ to-report good-bad-ratio
   report badAnts / (yellowAnts + greenAnts)
 end
 
+to image-timer
+  if timer > 30 [
+    set total-time (total-time + timer)
+    set filename word "testruns/" session-name
+    set filename word filename "-"
+    set filename word filename total-time
+    set filename word filename ".png"
+    export-interface (word filename)
+    reset-timer
+  ]
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; turtle related
 
 to go
  ;; turtle procedure
@@ -162,10 +178,10 @@ end
 ; *** End of NetLogo 4.0.3 Model Copyright Notice ***
 @#$#@#$#@
 GRAPHICS-WINDOW
-200
-10
-813
-644
+233
+11
+846
+645
 100
 100
 3.0
@@ -189,17 +205,17 @@ ticks
 
 CC-WINDOW
 5
-658
-822
-753
+659
+855
+754
 Command Center
 0
 
 BUTTON
-104
-184
-165
-217
+76
+297
+137
+330
 go
 go
 T
@@ -212,10 +228,10 @@ NIL
 NIL
 
 BUTTON
-29
-184
-90
-217
+10
+297
+71
+330
 setup
 setup\nreset-timer
 NIL
@@ -228,10 +244,10 @@ NIL
 NIL
 
 SLIDER
-7
-48
-178
-81
+11
+133
+182
+166
 greenAnts
 greenAnts
 1
@@ -243,25 +259,25 @@ NIL
 HORIZONTAL
 
 SLIDER
-5
-144
-179
-177
+9
+229
+183
+262
 density
 density
 0.0
 100.0
-19
+20
 1.0
 1
 %
 HORIZONTAL
 
 SLIDER
-7
-10
-179
-43
+11
+95
+183
+128
 yellowAnts
 yellowAnts
 0
@@ -273,15 +289,15 @@ NIL
 HORIZONTAL
 
 SLIDER
-7
-86
-179
-119
+11
+171
+183
+204
 badAnts
 badAnts
 0
 100
-20
+0
 1
 1
 NIL
@@ -319,6 +335,33 @@ good-bad-ratio
 2
 1
 11
+
+INPUTBOX
+11
+11
+226
+71
+session-name
+200_0
+1
+0
+String
+
+BUTTON
+10
+336
+138
+369
+save screenshots
+image-timer
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
 
 @#$#@#$#@
 WHAT IS IT?
