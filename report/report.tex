@@ -129,14 +129,13 @@ göras och studeras var:
 Laborationsspecifikation finns i original på sidan:\\
 \verb!http://www.cs.umu.se/kurser/5DV017/VT09/lab/lab1.html!
 
-\section{Reflektioner kring lösning}
-
-
 \section{Reflektioner}
 Nedan avsnitt beskriver analysen som gjorts med avseende på frågorna
 från problemspecifikationen.
 
 \subsection{Sortering av olika träbitar}
+% Reflektion kring er lösning och eventuella begränsningar
+
 % Den ursprungliga termitmodellen innehåller endast en sorts termiter
 % och en sorts träbitar. Utöka modellen till minst två sorters termiter
 % och två sorters träbitar. Behövs det ytterligare regler i termiterna
@@ -180,12 +179,38 @@ procedur.
 %  I er inlämnade lösning ska det enkelt gå att ändra antalet av
 %  respektive sort termiter och andelen av respektive sort träbitar.
 
-\subsection{images}
+För att testa feltoleransen i systemet lades myror in som plockar upp
+alla träsorter de stöter på och efter ett bestämt antal steg försöker
+lägga ner denna träbit på en ledig plats.
+
+Test gjordes där kvoten mellan jobbande myror och förstörande myror
+varierades.  I figur \ref{fig:first-conv-pic} –
+\ref{fig:last-conv-pic} har kvoten förstörande myror varierats mellan
+0 till 10 \%, konvergering av högarna påbörjas inom 90 sekunder. Ökas
+kvoten till 12 \% syns inga tecken på konvergering av högarna inom 180
+sekunder, se figur \ref{fig:12proc}. Detta kan tänkas beror på att
+antalet myror av båda sorter i förhållande till storleken på miljön de
+befinner sig i har blivit för fylld. Troligtvis kommer även denna
+modell att konvergera om den låtes köra vidare.
+
+Vidare tester gjordes med ett mindre antal myror fast med samma
+densitet av träbitar (totalt 400 arbetande myror + varierat antal
+förstörande myror). Figur \ref{fig:first-new} - \ref{fig:last-new}
+visar att modellerna med högre kvot förstörande myror även de
+konvergerar vid längre körningar. En krans av spridda träbitar runt
+högarna tyder på den kontinuerliga förstörelsen.
+
+Vi antar att det kommer att krävas fler antal förstörande myror än
+antalet uppbyggande myror för att hindra konvergering av högarna. Ett
+test av detta skulle ta allt för lång tid att genomföra.
+
+I de gjorda testen konvergerar högarna alltid men konvergeringstiden
+ökar markant.
 
 \begin{figure}
   \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
     \centering
-    \caption{30 sekunder, inga badAnts}
+    \caption{30 sekunder, inga badAnts}\label{fig:first-conv-pic}
     \includegraphics[width=6cm]{images/no-bad-30.png}
   \end{minipage}
   \hspace{0.5cm} % To get a little bit of space between the figures
@@ -291,17 +316,9 @@ procedur.
   \hspace{0.5cm} % To get a little bit of space between the figures
   \begin{minipage}[b]{0.5\linewidth}
     \centering
-    \caption{90 sekunder, 10 \% badAnts}
+    \caption{90 sekunder, 10 \% badAnts}\label{fig:last-conv-pic}
     \includegraphics[width=6cm]{images/50-bad-90.png}
   \end{minipage}
-\end{figure}
-
-% TODO: comment this figure in text
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=110mm]{images/50-bad-120.png}
-    \caption{120 sekunder, 10 \% badAnts}
-  \end{center}
 \end{figure}
 
 \begin{figure}
@@ -337,9 +354,35 @@ procedur.
   \hspace{0.5cm} % To get a little bit of space between the figures
   \begin{minipage}[b]{0.5\linewidth}
     \centering
-    \caption{180 sekunder, 12 \% badAnts}
+    \caption{180 sekunder, 12 \% badAnts}\label{fig:12proc}
     \includegraphics[width=6cm]{images/60-bad-180.png}
   \end{minipage}
+\end{figure}
+
+
+% Nya tester
+\begin{figure}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{150 sekunder, 20 \% badAnts}\label{fig:first-new}
+    \includegraphics[width=6cm]{images/20procent-badass-150.png}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{330 sekunder, 30 \% badAnts}
+    \includegraphics[width=6cm]{images/30procent-badass-330.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  
+  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+    \centering
+    \caption{1320 sekunder, 40 \% badAnts}\label{fig:last-new}
+    \includegraphics[width=6cm]{images/40procent-badass-1320.png}
+  \end{minipage}
+  \hspace{0.5cm} % To get a little bit of space between the figures
+  
+  
+  
 \end{figure}
 
 \section{Applikationsområden}
@@ -348,8 +391,15 @@ procedur.
 % applikationsområden för den här typen av algoritmer? Kan modellen
 % utökas för att göras mer intressant?
 
-\bibliographystyle{alpha}
-\bibliography{books.bib}
+Tänkta applikationer för denna typen av algoritmer kan vara till
+exempel olika mediciner och behandlingar på nano-nivå där mycket enkla
+små agenter gemensamt kan konvergera till en komplex behandlingsform.
+
+Kluster av billiga datorer kan jobba gemensamt för att bilda ett
+komplext beteende. Distribuerad bearbetning och lagring av data på
+datorer runt om världen. Exempel på sådana projekt är exempel
+lösningar som räknar fram stora primtal eller behandlar signaler och
+letar efter tecken på utomjordiskt liv.
 
 \newpage
 \appendix
