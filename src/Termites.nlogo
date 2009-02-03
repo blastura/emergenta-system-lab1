@@ -1,9 +1,22 @@
-globals [total-time filename]
-turtles-own [chip-color is-bad?]
+globals [
+  total-time
+  filename
+  fillness-ratio
+  max-fillness-ratio
+  nr-of-chips
+]
+
+breed [ants ant]
+breed [badAnts badAnt]
+
+turtles-own [chip-color]
 
 to setup
   clear-all
   set total-time 0
+  set fillness-ratio 0
+  set max-fillness-ratio 0
+  set nr-of-chips count patches * (density / 100)
   set-default-shape turtles "chipBug"
   ;; randomly distribute wood chips
   ask patches [
@@ -15,31 +28,31 @@ to setup
            ]
       ]
   ]
-  
         
   ;; randomly distribute termites
-  create-turtles yellowAnts [
-    set is-bad? false
+  create-ants yellowAnts [
     set chip-color yellow
     set color black
     setxy random-xcor random-ycor
     set size 5  ;; easier to see
   ]
   
-  create-turtles greenAnts [
-    set is-bad? false
+  create-ants greenAnts [
     set chip-color green
     set color black
     setxy random-xcor random-ycor
     set size 5  ;; easier to see
   ]
 
-  create-turtles badAnts [
-    set is-bad? true
+  create-badAnts number-of-bad-ants [
     set color red
     setxy random-xcor random-ycor
     set size 20  ;; easier to see
   ]
+  
+  ;; Plot stuff
+  set-current-plot "fillness"
+  set-plot-y-range 0 1
 end
 
 to-report yellow-green-ratio
@@ -47,7 +60,7 @@ to-report yellow-green-ratio
 end
 
 to-report good-bad-ratio
-  report badAnts / (yellowAnts + greenAnts)
+  report number-of-bad-ants / (yellowAnts + greenAnts)
 end
 
 to image-timer
@@ -66,17 +79,55 @@ end
 ; turtle related
 
 to go
- ;; turtle procedure
- ifelse not is-bad? [
-   search-for-chip
-   find-new-pile
-   put-down-chip
- ][
+ifelse fillness-ratio < 1 [
+  ;; turtle procedure
+  ask ants [ search-for-chip ]
+  ask ants [ find-new-pile ]
+  ask ants [ put-down-chip ]
+
    ;; if is-bad?
-   search-for-any-chip
-   get-away
-   put-down-chip
- ]
+  ask badAnts [ search-for-any-chip ]
+  ask badAnts [ get-away ]
+  ask badAnts [ put-down-chip ]
+  
+  ;; Plot stuff
+  if (ticks mod 10) = 0 [
+    set fillness-ratio 0
+    calculate-neighbour-fillness
+  
+    set-current-plot-pen "default"
+    plot fillness-ratio
+  ]
+  tick
+]
+;; else
+[
+  ;;stop animation
+]
+ 
+end
+
+to calculate-neighbour-fillness
+  let fill-count 0
+  ask patches [
+    if not (pcolor = black) [
+      let got-full-neighbourhood? true
+      let current-color pcolor
+      ask neighbors [
+        if not (pcolor = current-color) [
+          set got-full-neighbourhood? false
+          stop
+        ]
+      ]
+      if got-full-neighbourhood? [
+        set fill-count (fill-count + 1)
+      ]
+    ]
+  ]
+  set fillness-ratio (fill-count / nr-of-chips)
+  if max-fillness-ratio < fillness-ratio [
+    set max-fillness-ratio fillness-ratio
+  ]
 end
 
 to search-for-any-chip
@@ -206,7 +257,7 @@ ticks
 CC-WINDOW
 5
 659
-855
+1064
 754
 Command Center
 0
@@ -221,7 +272,7 @@ go
 T
 1
 T
-TURTLE
+OBSERVER
 NIL
 NIL
 NIL
@@ -291,10 +342,10 @@ HORIZONTAL
 SLIDER
 11
 171
-183
+196
 204
-badAnts
-badAnts
+number-of-bad-ants
+number-of-bad-ants
 0
 100
 0
@@ -304,10 +355,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-14
-488
-71
-533
+154
+325
+211
+370
 Timer
 timer
 0
@@ -315,10 +366,10 @@ timer
 11
 
 MONITOR
-14
-596
-149
-641
+10
+427
+145
+472
 yellow-green-ratio
 yellow-green-ratio
 2
@@ -326,10 +377,10 @@ yellow-green-ratio
 11
 
 MONITOR
-14
-543
-110
-588
+10
+374
+106
+419
 good-bad-ratio
 good-bad-ratio
 2
@@ -362,6 +413,45 @@ NIL
 NIL
 NIL
 NIL
+
+PLOT
+855
+11
+1055
+161
+fillness
+ticks / 10
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+PENS
+"default" 1.0 0 -16777216 true
+
+MONITOR
+857
+217
+986
+262
+max-fillness-ratio
+max-fillness-ratio
+3
+1
+11
+
+MONITOR
+856
+166
+985
+211
+fillness-ratio
+fillness-ratio
+3
+1
+11
 
 @#$#@#$#@
 WHAT IS IT?
@@ -705,7 +795,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 4.0.3
+NetLogo 4.0.4
 @#$#@#$#@
 setup
 ask turtles [ repeat 150 [ go ] ]
