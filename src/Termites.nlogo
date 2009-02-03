@@ -4,6 +4,7 @@ globals [
   fillness-ratio
   max-fillness-ratio
   nr-of-chips
+  session-tick-limit
 ]
 
 breed [ants ant]
@@ -75,8 +76,44 @@ to image-timer
   ]
 end
 
+to save-snapshot
+  set filename word "testruns/" session-name
+  set filename word filename "-"
+  set filename word filename ticks
+  set filename word filename ".png"
+  export-interface (word filename)
+end
+
+;; Method for scripted testing
+to test-script
+  ;; Constants
+  set yellowAnts 100
+  set greenAnts 100
+  set density 20
+
+  
+  ;; Tests
+  set number-of-bad-ants 0
+  setup
+  set session-name "0badAnts"
+  set session-tick-limit 100
+  while [ticks < session-tick-limit] [
+    go
+  ]
+  save-snapshot
+  
+  
+end
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; turtle related
+
+
+
+
+
 
 to go
 ifelse fillness-ratio < 1 [
@@ -393,7 +430,7 @@ INPUTBOX
 226
 71
 session-name
-200_0
+badAnts-0-ticks-2000
 1
 0
 String
@@ -452,6 +489,22 @@ fillness-ratio
 3
 1
 11
+
+BUTTON
+11
+610
+132
+643
+Run test script
+test-script
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
 
 @#$#@#$#@
 WHAT IS IT?
