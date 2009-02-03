@@ -1,5 +1,4 @@
 globals [
-  total-time
   filename
   fillness-ratio
   max-fillness-ratio
@@ -14,7 +13,6 @@ turtles-own [chip-color]
 
 to setup
   clear-all
-  set total-time 0
   set fillness-ratio 0
   set max-fillness-ratio 0
   set nr-of-chips count patches * (density / 100)
@@ -64,18 +62,6 @@ to-report good-bad-ratio
   report number-of-bad-ants / (yellowAnts + greenAnts)
 end
 
-to image-timer
-  if timer > 30 [
-    set total-time (total-time + timer)
-    set filename word "testruns/" session-name
-    set filename word filename "-"
-    set filename word filename total-time
-    set filename word filename ".png"
-    export-interface (word filename)
-    reset-timer
-  ]
-end
-
 to save-snapshot
   set filename word "testruns/" session-name
   set filename word filename "-"
@@ -84,34 +70,57 @@ to save-snapshot
   export-interface (word filename)
 end
 
+
 ;; Method for scripted testing
 to test-script
   ;; Constants
   set yellowAnts 100
   set greenAnts 100
   set density 20
+  let index 0
 
   
   ;; Tests
-  set number-of-bad-ants 0
-  setup
-  set session-name "0badAnts"
-  set session-tick-limit 100
-  while [ticks < session-tick-limit] [
-    go
+
+  repeat 2 [
+    set index (index + 1)
+    set number-of-bad-ants 40
+    setup
+    set session-name word "40badAnts-" index
+    set session-tick-limit 2000
+    while [ticks < session-tick-limit] [
+      go
+      if (ticks mod 500) = 0 [
+        save-snapshot
+      ]
+    ]
+    save-snapshot
   ]
-  save-snapshot
+  set index 0
   
+  repeat 2 [
+    set index (index + 1)
+    set number-of-bad-ants 50
+    setup
+    set session-name word "50badAnts-" index
+    set session-tick-limit 2000
+    while [ticks < session-tick-limit] [
+      go
+      if (ticks mod 500) = 0 [
+        save-snapshot
+      ]
+    ]
+    save-snapshot
+  ]
+  set index 0  
   
 end
 
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; turtle related
-
-
-
 
 
 
@@ -321,7 +330,7 @@ BUTTON
 71
 330
 setup
-setup\nreset-timer
+setup
 NIL
 1
 T
@@ -385,22 +394,11 @@ number-of-bad-ants
 number-of-bad-ants
 0
 100
-0
+50
 1
 1
 NIL
 HORIZONTAL
-
-MONITOR
-154
-325
-211
-370
-Timer
-timer
-0
-1
-11
 
 MONITOR
 10
@@ -430,7 +428,7 @@ INPUTBOX
 226
 71
 session-name
-badAnts-0-ticks-2000
+50badAnts-2
 1
 0
 String
@@ -440,9 +438,9 @@ BUTTON
 336
 138
 369
-save screenshots
-image-timer
-T
+save-snapshot
+save-snapshot
+NIL
 1
 T
 OBSERVER
