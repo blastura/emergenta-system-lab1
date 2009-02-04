@@ -1,5 +1,4 @@
 globals [
-  filename
   fillness-ratio
   max-fillness-ratio
   nr-of-chips
@@ -13,6 +12,7 @@ turtles-own [chip-color]
 
 to setup
   clear-all
+  file-close
   set fillness-ratio 0
   set max-fillness-ratio 0
   set nr-of-chips count patches * (density / 100)
@@ -20,12 +20,16 @@ to setup
   ;; randomly distribute wood chips
   ask patches [
      if random-float 100 < density [
-        ifelse (random 2) = 1 [
-           set pcolor yellow
+        ifelse two-breeds? [
+          ifelse (random 2) = 1 [
+             set pcolor yellow
            ][
-           set pcolor green
+              set pcolor green
            ]
-      ]
+        ][
+          set pcolor yellow
+        ]
+     ]
   ]
         
   ;; randomly distribute termites
@@ -36,11 +40,13 @@ to setup
     set size 5  ;; easier to see
   ]
   
-  create-ants greenAnts [
-    set chip-color green
-    set color black
-    setxy random-xcor random-ycor
-    set size 5  ;; easier to see
+  if two-breeds? [
+    create-ants greenAnts [
+      set chip-color green
+      set color black
+      setxy random-xcor random-ycor
+      set size 5  ;; easier to see
+    ]
   ]
 
   create-badAnts number-of-bad-ants [
@@ -63,57 +69,64 @@ to-report good-bad-ratio
 end
 
 to save-snapshot
-  set filename word "testruns/" session-name
+  let filename word "testruns/" session-name
   set filename word filename "-"
   set filename word filename ticks
   set filename word filename ".png"
-  export-interface (word filename)
+  export-interface filename
+end
+
+to set-file [ filename ]
+  ;; We check to make sure we actually got a string.
+  if is-string? filename [
+    ;; If the file already exists, we begin by deleting it, otherwise
+    ;; new data would be appended to the old contents.
+    set filename word "testruns/" filename
+    if file-exists? filename
+      [ file-delete filename ]
+    file-open filename
+  ]
+end
+
+to write-to-file
+  ;;show (word ticks ", " fillness-ratio)
+  file-print (word ticks ", " fillness-ratio)
 end
 
 
 ;; Method for scripted testing
 to test-script
-  ;; Constants
+  ;; Parameters
   set yellowAnts 100
   set greenAnts 100
+  set number-of-bad-ants 50
   set density 20
+  
   let index 0
-
   
   ;; Tests
-
-  repeat 2 [
+  repeat 5 [
     set index (index + 1)
-    set number-of-bad-ants 40
+    set two-breeds? false
+    
     setup
-    set session-name word "40badAnts-" index
+    set session-name (word number-of-bad-ants "badAntsOneBreed-" index)
+    set-file word session-name ".dat"
     set session-tick-limit 2000
     while [ticks < session-tick-limit] [
       go
+      if (ticks mod 10) = 0 [
+        write-to-file
+      ]
       if (ticks mod 500) = 0 [
         save-snapshot
       ]
     ]
     save-snapshot
+    file-close
+    show word "saved snapshot and data file for session: " session-name
   ]
-  set index 0
-  
-  repeat 2 [
-    set index (index + 1)
-    set number-of-bad-ants 50
-    setup
-    set session-name word "50badAnts-" index
-    set session-tick-limit 2000
-    while [ticks < session-tick-limit] [
-      go
-      if (ticks mod 500) = 0 [
-        save-snapshot
-      ]
-    ]
-    save-snapshot
-  ]
-  set index 0  
-  
+  set index 0 
 end
 
 
@@ -394,7 +407,7 @@ number-of-bad-ants
 number-of-bad-ants
 0
 100
-50
+40
 1
 1
 NIL
@@ -428,7 +441,7 @@ INPUTBOX
 226
 71
 session-name
-50badAnts-2
+40badAntsOneBreed-5
 1
 0
 String
@@ -503,6 +516,17 @@ NIL
 NIL
 NIL
 NIL
+
+SWITCH
+9
+483
+143
+516
+two-breeds?
+two-breeds?
+1
+1
+-1000
 
 @#$#@#$#@
 WHAT IS IT?

@@ -111,6 +111,23 @@
 \cfoot{\thepage}
 \pagenumbering{arabic}
 
+
+\section{Inledning}
+Denna laboration ska undersöka den emergenta egenskapen som uppstår
+med myror som var och en följer följande enkla regler:
+
+\begin{itemize}
+ \item Vandra slumpmässigt omkring (utan bärande på träbit)
+ \item Vid kontakt med en träbit, plocka upp den
+ \item Vandra slumpmässigt omkring (bärande på träbit)
+ \item Vid kontakt med en träbit, lägg ned den egna träbiten brevid den nya
+ \item Hoppa till första punkten igen
+\end{itemize}
+
+Med hjälp av dessa enkla regler kan det i interaktion mellan myror
+(eller en myra med sig själv över tid) uppträda den globala egenskapen
+av en samlad hög.
+
 \section{Problemspecifikation}\label{sec:problemspecifikation}
 Laborationen gick ut på att göra ändringar i en befintlig
 NetLogo\footnote{http://ccl.northwestern.edu/netlogo/} modell som
@@ -126,8 +143,90 @@ göras och studeras var:
 % Behövs det ytterligare regler i termiterna för att systemet ska
 % konvergera till en separat hög för varje sorts träbitar?
 
+\subsection{Frågor denna rapport behandlar}
+Följande lista innehåller frågor som denna laboration diskuterar
+kring:
+
+\begin{itemize}
+\item Behövs det ytterligare regler i termiterna för att systemet ska
+  konvergera till en separat hög för varje sorts träbitar?
+\item Behövs det ytterligare regler för att minska konvergeringstiden?
+  (Med konvergering menas här att det endast finns en hög av varje
+  sorts träbitar när systemet konvergerat.)
+\item Hur stor andel förstörande termiter behövs det minst för att
+  förstöra uppbyggnaden av en hög? (hur definieras förstöra?)
+\item Hur påverkar förstörarmyrorna konvergeringshastigheten?
+  % TODO: se nedan.
+\item OBS Studera detta med endast en sorts termiter/träbitar och med
+  flera sorters termiter/träbitar.
+\item OBS I er inlämnade lösning ska det enkelt gå att ändra antalet
+  av respektive sort termiter och andelen av respektive sort träbitar.
+\item Kan du se några applikationsområden för den här typen av algoritmer?
+\item Kan modellen utökas för att göras mer intressant?
+\end{itemize}
+
 Laborationsspecifikation finns i original på sidan:\\
 \verb!http://www.cs.umu.se/kurser/5DV017/VT09/lab/lab1.html!
+
+\section{Användarhandledning}
+Källkoden till implementationen Termites.nlogo som diskuteras i denna
+rapport finns att hitta på:
+
+\verb!~dit06ajn/edu/emergenta-system/lab1/src!
+
+Öppna filen i NetLogo för att köra den.
+
+\subsection{Förklaring av användargränssnittet}
+Nedan följer en förklaring av de knappar, reglage och monitorer som
+förekommer i användargränssnittet:
+
+\begin{itemize}
+\item \textbf{session-name} - används till filnamn för skärmdumpar.
+\item \textbf{yellowAnts} - antalet myror som intresserar sig av gula träbitar.
+\item \textbf{greenAnts} - antalet myror som intresserar sig av gröna träbitar.
+\item \textbf{number-of-bad-ants} - antalet myror som saboterar högbildandet.
+\item \textbf{density} - andelen av världens rutor som ska
+  representera träbitar. Denna implementationen placerar ut hälfen gröna
+  och hälften gula träbitar. Ex. 20 \% ger 10 \% gröna och 10 \% gula)
+\item \textbf{setup} - denna knapp initierar parametrarna till världen.
+\item \textbf{go} - denna knapp sätter igång animeringen i
+  världen. Setup måste köras en gång innan denna knapp får användas.
+\item \textbf{save-snapshot} - denna knapp sparar en skärmdump av
+  gränssnittet i katalogen src/testruns.
+\item \textbf{good-bad-ratio} - denna monitor visar kvoten av "snälla"
+  och "onda" myror.
+\item \textbf{yellow-green-ratio} - denna monitor visar kvoten av gula
+  och gröna myror.
+\item \textbf{Run test script} - denna knapp startar en metod som kör
+  ett antal hårdkodade test. Skärmdumpar kommer sparas under
+  körningens gång i katalogen src/testruns
+\item \textbf{fillness} - detta diagram visar fillness-ratio.
+\item \textbf{fillness-ratio} - denna monitor visar andelen träbitar där
+  alla grannar är av samma färg. Variabeln uppdateras var tioende
+  tick.
+\item \textbf{max-fillness-ratio} - denna monitor visar globala maxima
+  för variabeln fillness-ratio
+\end{itemize}
+
+\section{Metod för testning}
+% Test ants 100-100, density 20 %, variera badants 0, 10, 20, 30, 40,
+% max ticks väljer vi till 2000 eftersom det gott och väl räcker för
+% konvergering utan förstörande element.
+
+Inledningvis användes en trial-and-error metodik för att testköra
+implementationen och tolka vad de olika parametrarna har för inverkan
+i simuleringen. För att sedan generera mätbar testdata implementerades
+en metod som räknade antalet träbitar där alla grannar var av samma
+färg och därefter beräkna en kvot av dessa träbitar dividerat med
+totalt antal träbitar. Detta blir en fingervisning på hur långt
+konvergensen har nått. Maximal kvot uppstår när träbitarna ligger
+samlade i en boll då bollen har maximal area mot omkrets, alltså minst
+träbitar i ytterkant.  För att skapa testfall skrevs en metod som
+körde ett antal testkörningar med olika parameterinställningar och
+lagrade dessa genom att var 500:ade tick spara en skärmdump. Detta låg
+sedan sedan i grunden för de data som presenteras i rapporten.
+
+% TODO fyll på spara data o grafer
 
 \section{Reflektioner}
 Nedan avsnitt beskriver analysen som gjorts med avseende på frågorna
@@ -207,184 +306,89 @@ test av detta skulle ta allt för lång tid att genomföra.
 I de gjorda testen konvergerar högarna alltid men konvergeringstiden
 ökar markant.
 
-\begin{figure}
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{30 sekunder, inga badAnts}\label{fig:first-conv-pic}
-    \includegraphics[width=6cm]{images/no-bad-30.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{30 sekunder, 0,02 \% badAnts}
-    \includegraphics[width=6cm]{images/10-bad-30.png}
-  \end{minipage}
+%% TODO gamla bilder borttagna
 
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{60 sekunder, inga badAnts}
-    \includegraphics[width=6cm]{images/no-bad-60.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{60 sekunder, 0,02 \% badAnts}
-    \includegraphics[width=6cm]{images/10-bad-60.png}
-  \end{minipage}
-  
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{90 sekunder, inga badAnts}
-    \includegraphics[width=6cm]{images/no-bad-90.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{90 sekunder, 0,02 \% badAnts}
-    \includegraphics[width=6cm]{images/10-bad-90.png}
-  \end{minipage}
-\end{figure}
-
-\begin{figure}
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{30 sekunder, 4 \% badAnts}
-    \includegraphics[width=6cm]{images/20-bad-30.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{30 sekunder, 6 \% badAnts}
-    \includegraphics[width=6cm]{images/30-bad-30.png}
-  \end{minipage}
-
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{60 sekunder, 4 \% badAnts}
-    \includegraphics[width=6cm]{images/20-bad-60.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{60 sekunder, 6 \% badAnts}
-    \includegraphics[width=6cm]{images/30-bad-60.png}
-  \end{minipage}
-  
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{90 sekunder, 4 \% badAnts}
-    \includegraphics[width=6cm]{images/20-bad-90.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{90 sekunder, 6 \% badAnts}
-    \includegraphics[width=6cm]{images/30-bad-90.png}
-  \end{minipage}
-\end{figure}
-
-\begin{figure}
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{30 sekunder, 8 \% badAnts}
-    \includegraphics[width=6cm]{images/40-bad-30.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{30 sekunder, 10 \% badAnts}
-    \includegraphics[width=6cm]{images/50-bad-30.png}
-  \end{minipage}
-
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{60 sekunder, 8 \% badAnts}
-    \includegraphics[width=6cm]{images/40-bad-60.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{60 sekunder, 10 \% badAnts}
-    \includegraphics[width=6cm]{images/50-bad-60.png}
-  \end{minipage}
-  
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{90 sekunder, 8 \% badAnts}
-    \includegraphics[width=6cm]{images/40-bad-90.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{90 sekunder, 10 \% badAnts}\label{fig:last-conv-pic}
-    \includegraphics[width=6cm]{images/50-bad-90.png}
-  \end{minipage}
-\end{figure}
-
-\begin{figure}
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{30 sekunder, 12 \% badAnts}
-    \includegraphics[width=6cm]{images/60-bad-60.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{60 sekunder, 12 \% badAnts}
-    \includegraphics[width=6cm]{images/60-bad-60.png}
-  \end{minipage}
-
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{90 sekunder, 12 \% badAnts}
-    \includegraphics[width=6cm]{images/60-bad-90.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{120 sekunder, 12 \% badAnts}
-    \includegraphics[width=6cm]{images/60-bad-120.png}
-  \end{minipage}
-  
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
-    \centering
-    \caption{150 sekunder, 12 \% badAnts}
-    \includegraphics[width=6cm]{images/60-bad-150.png}
-  \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \caption{180 sekunder, 12 \% badAnts}\label{fig:12proc}
-    \includegraphics[width=6cm]{images/60-bad-180.png}
-  \end{minipage}
-\end{figure}
-
-
-% Nya tester
+%%%%% Grafer
 \begin{figure}
   \begin{minipage}[b]{0.5\linewidth}
     \centering
-    \caption{150 sekunder, 20 \% badAnts}\label{fig:first-new}
-    \includegraphics[width=6cm]{images/20procent-badass-150.png}
+    \caption{0  bad ants }\label{fig:images/graph0}
+    \includegraphics[width=6cm]{images/graph0.pdf}
   \end{minipage}
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+  \begin{minipage}[b]{0.5\linewidth}
     \centering
-    \caption{330 sekunder, 30 \% badAnts}
-    \includegraphics[width=6cm]{images/30procent-badass-330.png}
+    \caption{0 bad ants, one breed }\label{fig:images/graph0oneBreed}
+    \includegraphics[width=6cm]{images/graph0oneBreed.pdf}
   \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
   
-  \begin{minipage}[b]{0.5\linewidth} % A minipage that covers half the page
+  \hspace{0.5cm}
+  
+  \begin{minipage}[b]{0.5\linewidth}
     \centering
-    \caption{1320 sekunder, 40 \% badAnts}\label{fig:last-new}
-    \includegraphics[width=6cm]{images/40procent-badass-1320.png}
+    \caption{10 bad ants }\label{fig:images/graph10}
+    \includegraphics[width=6cm]{images/graph10.pdf}
   \end{minipage}
-  \hspace{0.5cm} % To get a little bit of space between the figures
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{10 bad ants, one breed }\label{fig:images/graph10oneBreed}
+    \includegraphics[width=6cm]{images/graph10oneBreed.pdf}
+  \end{minipage}
   
+  \hspace{0.5cm}
+
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{20 bad ants }\label{fig:images/graph20}
+    \includegraphics[width=6cm]{images/graph20.pdf}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{20 bad ants, one breed }\label{fig:images/graph20oneBreed}
+    \includegraphics[width=6cm]{images/graph20oneBreed.pdf}
+  \end{minipage}
   
+  \hspace{0.5cm}
+
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{30 bad ants }\label{fig:images/graph30}
+    \includegraphics[width=6cm]{images/graph30.pdf}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{30 bad ants, one breed }\label{fig:images/graph30oneBreed}
+    \includegraphics[width=6cm]{images/graph30oneBreed.pdf}
+  \end{minipage}
   
 \end{figure}
 
+\begin{figure}
+
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{40 bad ants }\label{fig:images/graph40}
+    \includegraphics[width=6cm]{images/graph40.pdf}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{40 bad ants, one breed }\label{fig:images/graph40oneBreed}
+    \includegraphics[width=6cm]{images/graph40oneBreed.pdf}
+  \end{minipage}
+  
+  \hspace{0.5cm}
+  
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{50 bad ants }\label{fig:images/graph50}
+    \includegraphics[width=6cm]{images/graph50.pdf}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{50 bad ants, one breed }\label{fig:images/graph50oneBreed}
+    \includegraphics[width=6cm]{images/graph50oneBreed.pdf}
+  \end{minipage}
+\end{figure}
+                    
 \section{Applikationsområden}
 % Diskutera de frågor som nämns ovan och försöka att sätta in
 % laborationen i ett större sammanhang. Kan du se några
@@ -400,6 +404,24 @@ komplext beteende. Distribuerad bearbetning och lagring av data på
 datorer runt om världen. Exempel på sådana projekt är exempel
 lösningar som räknar fram stora primtal eller behandlar signaler och
 letar efter tecken på utomjordiskt liv.
+
+\section{Lösningens begränsningar}
+Om ett densitetsreglage fanns till varje färg hade vi problem med att
+verkligen få rätt densitet till varje färg. När den första färgen har
+slumpats ut vill vi slumpa ut nästa färg. Här misslyckades vi med att
+lägga den nya färgen på enbart lediga rutor och alltså kunde vi måla
+över den gamla färgen. Detta löste vi genom att ha ett reglage med
+densitet och för varje slumpad plats målas med sannolikheten 0.5 den
+gröna färgen och med sannolikheten 0.5 den gula färgen. Att ha ett
+reglage till varje färg är abolut önskvärt för testning och detta
+skulle vara en bra grej att fixa om mer tid fanns.
+
+Vi försökte få in en ticks räknare utan att resultatet blev att en
+myra i taget rörde sig. Detta lyckades vi inte med eftersom de metoder
+en myra kör förflyttar myran långa sträckor i samma metod. Vi antar
+dock att resultaten blir intressant ändå i och med att en myra bara
+kollar på pinnar och inte på andra myrors rörelse % TODO (STÄMMET
+                                                  % DETTA?  ?
 
 \newpage
 \appendix
