@@ -233,7 +233,8 @@ konvergeringskvot.
 
 Testkörningarna kördes maximalt 2000 \textit{ticks}, vilket gott och
 väl räckte för konvergering av högar i testfall där få förstörande
-myror fanns med.
+myror fanns med. Längre testkörningar väljes bort på grund av
+tidsbrist.
 
 % TODO fyll på spara data o grafer
 
@@ -273,7 +274,52 @@ träsorter.
 För att minska tiden det tog för myrorna att av varje träsort enbart
 bilda en samlad hög ökades stegen som myrorna tog mellan varje
 procedur. Denna ändring gjordes i metoden \textit{wiggle}, steglängden
-ökades från ett steg till tjugo.
+ökades från ett steg till tjugo. Fyllnadsgraden för tre olika
+steglängder (1, 10, 20) kan avläsas i figur
+\ref{fig:images/graphWiggle-1}–\ref{fig:images/graphWiggle-20}.  Med
+steglängd satt till 1 konvergerar inte träbitarna till en hög inom
+2000 \textit{ticks}, se figur \ref{fig:wiggle1} jämfört med figur
+\ref{fig:wiggle20}.
+
+Vi ser att vid steglängden satt till 10 konvergerar högarna snabbare,
+se figur \ref{fig:images/graphWiggle-10} jämfört med figur
+\ref{fig:images/graphWiggle-20}. Dock gjordes dessa test sent i
+testningen och har därför inte använts vid de andra testkörningarna.
+
+\begin{figure}[H]
+\begin{minipage}[b]{0.5\linewidth}
+  \centering
+  \caption{Fyllnadsgrad för steglängd 1}\label{fig:images/graphWiggle-1}
+  \includegraphics[width=6cm]{images/graphWiggleTests-1.pdf}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+  \centering
+  \caption{Fyllnadsgrad för steglängd 10}\label{fig:images/graphWiggle-10}
+  \includegraphics[width=6cm]{images/graphWiggleTests-10.pdf}
+\end{minipage}
+
+\hspace{0.5cm}
+
+\begin{minipage}[b]{0.5\linewidth}
+  \centering
+  \caption{Fyllnadsgrad för steglängd 20}\label{fig:images/graphWiggle-20}
+  \includegraphics[width=6cm]{images/graphWiggleTests-20.pdf}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{Wiggle: 1, efter 2000 ticks}\label{fig:wiggle1}
+    \includegraphics[width=6cm]{images/1-wiggleTest-2-2000.png}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \caption{Wiggle: 20, efter 2000 ticks}\label{fig:wiggle20}
+    \includegraphics[width=6cm]{images/20-wiggleTest-4-2000.png}
+  \end{minipage}
+\end{figure}
+
 % TODO reflektioner över detta? Tester osv.
 
 \subsection{Feltolerans}
@@ -293,33 +339,39 @@ procedur. Denna ändring gjordes i metoden \textit{wiggle}, steglängden
 
 För att testa feltoleransen i systemet lades myror in som plockar upp
 alla träsorter de stöter på och efter ett bestämt antal steg försöker
-lägga ner denna träbit på en ledig plats.
+lägga ner en uppplockad träbit på ledig plats. Vi anser att en
+uppbyggnaden av en hög är förstörd om systemet inte uppnår en
+fyllnadsgrad på över 50 \% inom 2000 \textit{ticks}.
 
 Test gjordes där kvoten mellan jobbande myror och förstörande myror
-varierades. Antalet förstörande myror har varierats mellan 0 och 50 stycken,
-antalet arbetande myror har varit 100 stycken av varje sort och med
-densitet av 10 \% per träsort. Efter som modellen bygger på
+varierades. Antalet förstörande myror har varierats mellan 0 och 50
+stycken, antalet arbetande myror har varit 100 stycken av varje sort
+och med densitet av 10 \% per träsort. Efter som modellen bygger på
 slumpfaktorer, till exempel myrornas riktning och träbitarnas
 startpositioner, har varje test har körts fem gånger för att förhindra
-skev bild av förloppen på grund av slumpen. 
+skev bild av förloppen på grund av slumpen. Redan vid fem
+testkörningar syns att variationen på fyllnadsgrad mellan olika
+körningar, med samma parameterinställningar , kan variera kraftigt, se
+figur \ref{fig:images/graph30} och \ref{fig:images/graph40}.
 
 Träbitarnas fyllnadsgrad, se avsnitt \ref{sec:metod-for-testning}, har
-plottats i förhållande till antal \textit{ticks} som körts i figur
+plottats i förhållande till antal \textit{ticks} som körts, se figur
 \ref{fig:images/graph0} till \ref{fig:images/graph50oneBreed}.
 
+En krans av spridda träbitar runt högarna tyder på den kontinuerliga
+förstörelsen av förstörar myrorna, se exempel i figur
+\ref{fig:scatter}. Detta syns också i och med att fyllnadsgraden
+aldrig kommer upp i samma högsta nivå som när inga förstörande myror
+finnes.
 
-
-En krans av spridda träbitar runt
-högarna tyder på den kontinuerliga förstörelsen.
-
-Vi antar att det kommer att krävas fler antal förstörande myror än
-antalet uppbyggande myror för att hindra konvergering av högarna. Ett
-test av detta skulle ta allt för lång tid att genomföra.
-
-% TODO gamla bilder borttagna
+Enligt testkörningarna och vår definition av förstörd uppbyggnad av
+högar krävs det 20 \% förstörande myror av antalet jobbande myror för
+att konvergering av högarna ska hindras. Längre test väljes bort på
+grund av tidsbrist och därför kan inte reflektioner göras kring
+resultat med fler än 2000 \textit{ticks}.
 
 % Grafer
-\begin{figure}
+\begin{figure}[H]
   \begin{minipage}[b]{0.5\linewidth}
     \centering
     \caption{0  bad ants }\label{fig:images/graph0}
@@ -372,8 +424,7 @@ test av detta skulle ta allt för lång tid att genomföra.
   
 \end{figure}
 
-\begin{figure}
-
+\begin{figure}[H]
   \begin{minipage}[b]{0.5\linewidth}
     \centering
     \caption{40 bad ants }\label{fig:images/graph40}
@@ -398,7 +449,14 @@ test av detta skulle ta allt för lång tid att genomföra.
     \includegraphics[width=6cm]{images/graph50oneBreed.pdf}
   \end{minipage}
 \end{figure}
-                    
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=110mm]{images/scatter.png}
+    \caption{Krans runt högar}
+    \label{fig:scatter}
+  \end{center}
+\end{figure}
 \section{Applikationsområden}
 % Diskutera de frågor som nämns ovan och försöka att sätta in
 % laborationen i ett större sammanhang. Kan du se några
@@ -416,23 +474,24 @@ lösningar som räknar fram stora primtal eller behandlar signaler och
 letar efter tecken på utomjordiskt liv.
 
 \section{Lösningens begränsningar}
-Om ett densitetsreglage fanns till varje färg hade vi problem med att
+Om ett densitetsreglage fanns till varje färg uppstod problemet att
 verkligen få rätt densitet till varje färg. När den första färgen har
-slumpats ut vill vi slumpa ut nästa färg. Här misslyckades vi med att
-lägga den nya färgen på enbart lediga rutor och alltså kunde vi måla
-över den gamla färgen. Detta löste vi genom att ha ett reglage med
-densitet och för varje slumpad plats målas med sannolikheten 0.5 den
-gröna färgen och med sannolikheten 0.5 den gula färgen. Att ha ett
-reglage till varje färg är abolut önskvärt för testning och detta
-skulle vara en bra grej att fixa om mer tid fanns.
+slumpats ut ska nästa färg ritas ut. Här misslyckades detta genom att
+den nya färgen ibland ritade över den gamla färgen.
 
-När vi gjorde om modellen för att lägga in en \textit{ticks}-räknare
-var vi tvungna att ändra \textit{go}-proceduren så att den körs av en
+Detta löstes genom att införa ett reglage för densitet. För varje
+slumpad plats målas med sannolikheten 0.5 den gröna färgen och med
+sannolikheten 0.5 den gula färgen. Att ha ett reglage till varje färg
+är abolut önskvärt för testning med olika densitet av var färg. Detta
+skulle vara en bra grej att fixa och testköra om mer tid fanns.
+
+När modellen gjordes för att lägga in en \textit{ticks}-räknare
+ändrades \textit{go}-proceduren så att den körs av en
 \textit{observer}. Ändringarna fick som sidoeffekt att varje myra kör
 varje procedur sekvensiellt istället för att alla myror agerar
-samtidigt. Vi antar dock att resultaten blir intressant ändå i och med
-att en myra bara kollar på pinnar och inte på andra myrors
-rörelser. % TODO (STÄMMET  DETTA?  ?
+samtidigt. Dock antas resultaten blir intressant ändå i och med
+att en myra bara kollar på träbitar och inte på andra myrors
+rörelser. % TODO (STÄMMET DETTA?  ?
 
 \newpage
 \appendix

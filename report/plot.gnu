@@ -93,3 +93,25 @@ plot '../src/testruns/50badAntsOneBreed-1.dat' ti "50 bad ants, run 1", \
      '../src/testruns/50badAntsOneBreed-3.dat' ti "50 bad ants, run 3", \
      '../src/testruns/50badAntsOneBreed-4.dat' ti "50 bad ants, run 4", \
      '../src/testruns/50badAntsOneBreed-5.dat' ti "50 bad ants, run 5"
+     
+# One breed, one chiptype
+set output "graphWiggleTests-1.pdf"
+plot '../src/testruns/1-wiggleTest-1.dat' ti "Wiggle fd: 1", \
+     '../src/testruns/1-wiggleTest-2.dat' ti "Wiggle fd: 1", \
+     '../src/testruns/1-wiggleTest-3.dat' ti "Wiggle fd: 1", \
+     '../src/testruns/1-wiggleTest-4.dat' ti "Wiggle fd: 1", \
+     '../src/testruns/1-wiggleTest-5.dat' ti "Wiggle fd: 1"
+
+set output "graphWiggleTests-10.pdf"
+plot '../src/testruns/10-wiggleTest-1.dat' ti "Wiggle fd: 10", \
+     '../src/testruns/10-wiggleTest-2.dat' ti "Wiggle fd: 10", \
+     '../src/testruns/10-wiggleTest-3.dat' ti "Wiggle fd: 10", \
+     '../src/testruns/10-wiggleTest-4.dat' ti "Wiggle fd: 10", \
+     '../src/testruns/10-wiggleTest-5.dat' ti "Wiggle fd: 10"
+     
+set output "graphWiggleTests-20.pdf"
+plot '../src/testruns/20-wiggleTest-1.dat' ti "Wiggle fd: 20", \
+     '../src/testruns/20-wiggleTest-2.dat' ti "Wiggle fd: 20", \
+     '../src/testruns/20-wiggleTest-3.dat' ti "Wiggle fd: 20", \
+     '../src/testruns/20-wiggleTest-4.dat' ti "Wiggle fd: 20", \
+     '../src/testruns/20-wiggleTest-5.dat' ti "Wiggle fd: 20"
