@@ -197,6 +197,8 @@ förekommer i användargränssnittet:
   och "onda" myror.
 \item \textbf{yellow-green-ratio} - denna monitor visar kvoten av gula
   och gröna myror.
+\item \textbf{two-breeds?} - ställer in om det ska finnas två olika
+  sorters träbitar och myror.
 \item \textbf{Run test script} - denna knapp startar en metod som kör
   ett antal hårdkodade test. Skärmdumpar kommer sparas under
   körningens gång i katalogen src/testruns
@@ -208,7 +210,7 @@ förekommer i användargränssnittet:
   för variabeln fillness-ratio
 \end{itemize}
 
-\section{Metod för testning}
+\section{Metod för testning}\label{sec:metod-for-testning}
 % Test ants 100-100, density 20 %, variera badants 0, 10, 20, 30, 40,
 % max ticks väljer vi till 2000 eftersom det gott och väl räcker för
 % konvergering utan förstörande element.
@@ -221,10 +223,17 @@ färg och därefter beräkna en kvot av dessa träbitar dividerat med
 totalt antal träbitar. Detta blir en fingervisning på hur långt
 konvergensen har nått. Maximal kvot uppstår när träbitarna ligger
 samlade i en boll då bollen har maximal area mot omkrets, alltså minst
-träbitar i ytterkant.  För att skapa testfall skrevs en metod som
-körde ett antal testkörningar med olika parameterinställningar och
-lagrade dessa genom att var 500:ade tick spara en skärmdump. Detta låg
-sedan sedan i grunden för de data som presenteras i rapporten.
+träbitar i ytterkant.
+
+För att skapa testfall skrevs en metod som körde ett antal
+testkörningar med olika parameterinställningar och lagrade dessa genom
+att var 500:ade \textit{tick} spara en skärmdump, och vid var 10:onde
+\textit{tick} spara antalet \textit{ticks} och aktuell
+konvergeringskvot.
+
+Testkörningarna kördes maximalt 2000 \textit{ticks}, vilket gott och
+väl räckte för konvergering av högar i testfall där få förstörande
+myror fanns med.
 
 % TODO fyll på spara data o grafer
 
@@ -234,7 +243,6 @@ från problemspecifikationen.
 
 \subsection{Sortering av olika träbitar}
 % Reflektion kring er lösning och eventuella begränsningar
-
 % Den ursprungliga termitmodellen innehåller endast en sorts termiter
 % och en sorts träbitar. Utöka modellen till minst två sorters termiter
 % och två sorters träbitar. Behövs det ytterligare regler i termiterna
@@ -242,26 +250,31 @@ från problemspecifikationen.
 % träbitar? Behövs det ytterligare regler för att minska
 % konvergeringstiden? Med konvergering menas här att det endast finns en
 % hög av varje sorts träbitar när systemet konvergerat.
+För implementera sortering av olika träbitar gjordes två försök. Ett
+med en myrsort och fler regler än de som fanns i den ursprungliga
+modellen, samt ett försök med två myrsorter liknande den i den givna
+modellen.
 
-För att sortera olika sorters träbitar görs skapas olika myrsorter som
-var för sig enbart är intresserade av att plocka upp och lägga ner
-träbitar av en specifik sort. För att en myrsort ska lägga ner sin
-träbit krävs att den först hittat en träbit av samma sort. Det är
-alltså inga ny regler som införts bara nya myrsorter och
-träbitar. Myrsorterna är helt oberoende av varandra.
+Vid försök med att låta en och samma myrsort plocka upp olika
+träsorter men enbart lägga ner dem när de hittat en träsort av typ,
+uppstod problem med att högar bildades av blandade träsorter. Detta
+eftersom myrorna aldrig gick in mot mitten av en hög för att plocka
+träbitar. Så en myra hittade en träbit plockades den upp och lades ned
+vid första kontakt med liknande träbit. Detta resulterade i att
+myrorna alltid höll sig i utkanten av högarna. Ingen sortering av
+redan skapade högar utfördes.
 
-Vid försök med en myrsort som plockar upp alla möjliga träsorter men
-enbart lägger ner dem när de hittat en träsort av samma typ som myran
-själv bär på blev det problem med att högar bildades av blandade
-träsorter. Detta eftersom myrorna inte var benägna att gå in mot
-mitten av en hög för att plocka träbitar, så fort en träbit hittades
-plockade den och lades så fort en liknande träbit hittades, vilket
-alltså gjorde att myrorna alltid höll sig i utkanten av högarna. Ingen
-filtrering av redan skapade högar utfördes.
+Vid försök med olika myrsorter som var för sig enbart plockade upp och
+lade ner träbitar av en specifik sort, konvergerade högarna
+separat. % TODO, se figur \ref}.
+Det krävdes alltså inga nya regler utan bara nya myr- och
+träsorter.
 
 För att minska tiden det tog för myrorna att av varje träsort enbart
 bilda en samlad hög ökades stegen som myrorna tog mellan varje
-procedur.
+procedur. Denna ändring gjordes i metoden \textit{wiggle}, steglängden
+ökades från ett steg till tjugo.
+% TODO reflektioner över detta? Tester osv.
 
 \subsection{Feltolerans}
 % I ett system är feltolerans en viktig egenskap, ett naturligt eller
@@ -283,32 +296,29 @@ alla träsorter de stöter på och efter ett bestämt antal steg försöker
 lägga ner denna träbit på en ledig plats.
 
 Test gjordes där kvoten mellan jobbande myror och förstörande myror
-varierades.  I figur \ref{fig:first-conv-pic} –
-\ref{fig:last-conv-pic} har kvoten förstörande myror varierats mellan
-0 till 10 \%, konvergering av högarna påbörjas inom 90 sekunder. Ökas
-kvoten till 12 \% syns inga tecken på konvergering av högarna inom 180
-sekunder, se figur \ref{fig:12proc}. Detta kan tänkas beror på att
-antalet myror av båda sorter i förhållande till storleken på miljön de
-befinner sig i har blivit för fylld. Troligtvis kommer även denna
-modell att konvergera om den låtes köra vidare.
+varierades. Antalet förstörande myror har varierats mellan 0 och 50 stycken,
+antalet arbetande myror har varit 100 stycken av varje sort och med
+densitet av 10 \% per träsort. Efter som modellen bygger på
+slumpfaktorer, till exempel myrornas riktning och träbitarnas
+startpositioner, har varje test har körts fem gånger för att förhindra
+skev bild av förloppen på grund av slumpen. 
 
-Vidare tester gjordes med ett mindre antal myror fast med samma
-densitet av träbitar (totalt 400 arbetande myror + varierat antal
-förstörande myror). Figur \ref{fig:first-new} - \ref{fig:last-new}
-visar att modellerna med högre kvot förstörande myror även de
-konvergerar vid längre körningar. En krans av spridda träbitar runt
+Träbitarnas fyllnadsgrad, se avsnitt \ref{sec:metod-for-testning}, har
+plottats i förhållande till antal \textit{ticks} som körts i figur
+\ref{fig:images/graph0} till \ref{fig:images/graph50oneBreed}.
+
+
+
+En krans av spridda träbitar runt
 högarna tyder på den kontinuerliga förstörelsen.
 
 Vi antar att det kommer att krävas fler antal förstörande myror än
 antalet uppbyggande myror för att hindra konvergering av högarna. Ett
 test av detta skulle ta allt för lång tid att genomföra.
 
-I de gjorda testen konvergerar högarna alltid men konvergeringstiden
-ökar markant.
+% TODO gamla bilder borttagna
 
-%% TODO gamla bilder borttagna
-
-%%%%% Grafer
+% Grafer
 \begin{figure}
   \begin{minipage}[b]{0.5\linewidth}
     \centering
@@ -416,12 +426,13 @@ gröna färgen och med sannolikheten 0.5 den gula färgen. Att ha ett
 reglage till varje färg är abolut önskvärt för testning och detta
 skulle vara en bra grej att fixa om mer tid fanns.
 
-Vi försökte få in en ticks räknare utan att resultatet blev att en
-myra i taget rörde sig. Detta lyckades vi inte med eftersom de metoder
-en myra kör förflyttar myran långa sträckor i samma metod. Vi antar
-dock att resultaten blir intressant ändå i och med att en myra bara
-kollar på pinnar och inte på andra myrors rörelse % TODO (STÄMMET
-                                                  % DETTA?  ?
+När vi gjorde om modellen för att lägga in en \textit{ticks}-räknare
+var vi tvungna att ändra \textit{go}-proceduren så att den körs av en
+\textit{observer}. Ändringarna fick som sidoeffekt att varje myra kör
+varje procedur sekvensiellt istället för att alla myror agerar
+samtidigt. Vi antar dock att resultaten blir intressant ändå i och med
+att en myra bara kollar på pinnar och inte på andra myrors
+rörelser. % TODO (STÄMMET  DETTA?  ?
 
 \newpage
 \appendix

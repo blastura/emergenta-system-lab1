@@ -99,8 +99,8 @@ to test-script
   ;; Parameters
   set yellowAnts 100
   set greenAnts 100
-  set number-of-bad-ants 50
-  set density 20
+  set number-of-bad-ants 40
+  set density 10
   
   let index 0
   
@@ -377,7 +377,7 @@ density
 density
 0.0
 100.0
-20
+10
 1.0
 1
 %
@@ -407,7 +407,7 @@ number-of-bad-ants
 number-of-bad-ants
 0
 100
-40
+30
 1
 1
 NIL
@@ -441,7 +441,7 @@ INPUTBOX
 226
 71
 session-name
-40badAntsOneBreed-5
+30badAntsOneBreed-5
 1
 0
 String
@@ -502,10 +502,10 @@ fillness-ratio
 11
 
 BUTTON
-11
-610
-132
-643
+9
+528
+130
+561
 Run test script
 test-script
 NIL
